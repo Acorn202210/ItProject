@@ -12,6 +12,8 @@ import org.springframework.stereotype.Service;
 
 import com.acorn.project.notice.dao.NoticeDao;
 import com.acorn.project.notice.dto.NoticeDto;
+import com.acorn.project.notice.dto.NoticeReq;
+import com.acorn.project.notice.dto.NoticeRes;
 
 
 @Service
@@ -134,7 +136,7 @@ public class NoticeServiceImpl implements NoticeService{
 	}
 
 	@Override
-	public Map<String, String> saveContent(NoticeDto dto) {
+	public Map<String, String> saveContent(NoticeRes dto) {
 		noticeDao.insert(dto);
 
 		Map<String, String> map = new HashMap<String, String>();
@@ -145,7 +147,7 @@ public class NoticeServiceImpl implements NoticeService{
 	}
 
 	@Override
-	public Map<String, String> updateContent(NoticeDto dto) {
+	public Map<String, String> updateContent(NoticeReq dto) {
 		noticeDao.update(dto);
 		
 		Map<String, String> map = new HashMap<String, String>();

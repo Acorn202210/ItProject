@@ -33,11 +33,11 @@
 		<include refid="searchCondition"/>
 	</select>		
 
-	<insert id="insert" parameterType="noticeDto">
+	<insert id="insert" parameterType="noticeRes">
 		INSERT INTO NOTICE
 		(num,title,content,viewCount,regdate)
 		VALUES(NOTICE_seq.NEXTVAL, #{title},
-			#{content}, #{viewCount}, SYSDATE)
+			#{content}, 0, SYSDATE)
 	</insert>
 	
 	<select id="getData" parameterType="int" resultType="noticeDto">
@@ -73,7 +73,7 @@
 		WHERE num=#{num}
 	</delete>
 	
-	<update id="update" parameterType="noticeDto">
+	<update id="update" parameterType="noticeReq">
 		UPDATE NOTICE
 		SET title=#{title}, content=#{content}
 		WHERE num=#{num}

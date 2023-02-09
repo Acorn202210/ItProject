@@ -22,6 +22,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.acorn.project.notice.dto.NoticeDto;
+import com.acorn.project.notice.dto.NoticeReq;
+import com.acorn.project.notice.dto.NoticeRes;
 import com.acorn.project.notice.service.NoticeService;
 
 import io.swagger.annotations.Api;
@@ -53,19 +55,18 @@ public class Notice {
 	
 	@ApiOperation(value="공지 사항 등록", notes = "공지사항을 입력 받아 등록한다.")
 	@PostMapping("/insert")
-	public Map<String, String> insert(@RequestBody NoticeDto dto) {
-		return service.saveContent(dto);
+	public Map<String, String> insert(@RequestBody NoticeRes noticeRes) {
+		return service.saveContent(noticeRes);
 	}
 	
 	@ApiOperation(value="공지 사항 수정", notes = "공지사항을 입력 받아 등록한다.")
 	@PutMapping("/{num}/update")
-	public Map<String, String> update(@PathVariable int num, @RequestParam(value = "title", required = false)String title,
-			@RequestParam(value = "content", required = false)String content){
+	public Map<String, String> update(@PathVariable int num, @RequestBody NoticeRes noticeRes){
 		
-		NoticeDto dto = new NoticeDto();
+		NoticeReq dto = new NoticeReq();
 		dto.setNum(num);
-		dto.setTitle(title);
-		dto.setContent(content);
+		dto.setTitle(noticeRes.getTitle());
+		dto.setContent(noticeRes.getContent());
 		
 		return service.updateContent(dto);
 	}

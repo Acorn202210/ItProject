@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.acorn.project.notice.dto.NoticeDto;
+import com.acorn.project.notice.dto.NoticeReq;
+import com.acorn.project.notice.dto.NoticeRes;
 
 @Repository
 public class NoticeDaoImpl implements NoticeDao {
@@ -26,7 +28,7 @@ public class NoticeDaoImpl implements NoticeDao {
 	}
 
 	@Override
-	public void insert(NoticeDto dto) {
+	public void insert(NoticeRes dto) {
 		session.insert("notice.insert", dto);
 		
 	}
@@ -53,7 +55,7 @@ public class NoticeDaoImpl implements NoticeDao {
 	}
 
 	@Override
-	public void update(NoticeDto dto) {
+	public void update(NoticeReq dto) {
 		session.update("notice.update", dto);
 		
 	}
