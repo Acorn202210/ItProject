@@ -29,6 +29,15 @@ public class NoticeDto {
 		this.prevNum = prevNum;
 		this.nextNum = nextNum;
 	}
+	
+	public void patch(NoticeDto dto) {
+		if(dto.title != null) {
+			this.title = dto.title;
+		}
+		if(dto.content != null) {
+			this.content = dto.content;
+		}
+	}
 
 	public int getNum() {
 		return num;

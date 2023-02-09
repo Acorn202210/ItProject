@@ -1,7 +1,9 @@
 package com.acorn.project.notice.service;
 
 import java.net.URLEncoder;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -18,20 +20,19 @@ public class NoticeServiceImpl implements NoticeService{
 	private NoticeDao noticeDao;
 	
 	@Override
-	public void getList(HttpServletRequest request) {
+	public Map<String, Object> getList(int pageNum, String keyword, String condition) {
 		final int PAGE_ROW_COUNT=5;
 		final int PAGE_DISPLAY_COUNT=5;
 		
-		int pageNum=1;
-		String strPageNum=request.getParameter("pageNum");
+		int num=1;
+		String strPageNum=Integer.toString(pageNum);
 		if(strPageNum != null){
-			pageNum=Integer.parseInt(strPageNum);
+			num=Integer.parseInt(strPageNum);
 		}
 		
 		int startRowNum=1+(pageNum-1)*PAGE_ROW_COUNT;
 		int endRowNum=pageNum*PAGE_ROW_COUNT;
-		String keyword=request.getParameter("keyword");
-		String condition=request.getParameter("condition");
+	
 		if(keyword==null){
 			keyword="";
 			condition=""; 
@@ -70,27 +71,25 @@ public class NoticeServiceImpl implements NoticeService{
 			endPageNum=totalPageCount; 
 		}
 		
-		request.setAttribute("pageNum", pageNum);
-		request.setAttribute("startPageNum", startPageNum);
-		request.setAttribute("endPageNum", endPageNum);
-		request.setAttribute("condition", condition);
-		request.setAttribute("keyword", keyword);
-		request.setAttribute("encodedK", encodedK);
-		request.setAttribute("totalPageCount", totalPageCount);
-		request.setAttribute("list", list);
-		request.setAttribute("totalRow", totalRow);
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("pageNum", pageNum);
+		map.put("startPageNum", startPageNum);
+		map.put("endPageNum", endPageNum);
+		map.put("condition", condition);
+		map.put("keyword", keyword);
+		map.put("encodedK", encodedK);
+		map.put("totalPageCount", totalPageCount);
+		map.put("totalRow", totalRow);
+		map.put("list", list);
+		
+		return map;
 		
 	}
 
 	@Override
-	public void getDetail(HttpServletRequest request) {
-		
-		int num=Integer.parseInt(request.getParameter("num"));
-		
+	public Map<String, Object> getDetail(int num, String keyword, String condition) {
+				
 		noticeDao.addViewCount(num);
-	
-		String keyword=request.getParameter("keyword");
-		String condition=request.getParameter("condition");
 		
 		if(keyword==null){
 			
@@ -123,39 +122,58 @@ public class NoticeServiceImpl implements NoticeService{
 		int startRowNum=1+(pageNum-1)*PAGE_ROW_COUNT;
 
 		int endRowNum=pageNum*PAGE_ROW_COUNT;
-
-		request.setAttribute("dto", resultDto);
-		request.setAttribute("condition", condition);
-		request.setAttribute("keyword", keyword);
-		request.setAttribute("encodedK", encodedK);
 		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("condition", condition);
+		map.put("keyword", keyword);
+		map.put("encodedK", encodedK);
+		map.put("dto", resultDto);
+
+		return map;
 		
 	}
 
 	@Override
-	public void saveContent(NoticeDto dto) {
+	public Map<String, String> saveContent(NoticeDto dto) {
 		noticeDao.insert(dto);
+
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("isSuccess","success");
+				
+		return map;
 		
 	}
 
 	@Override
-	public void updateContent(NoticeDto dto) {
+	public Map<String, String> updateContent(NoticeDto dto) {
 		noticeDao.update(dto);
 		
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("isSuccess","success");
+				
+		return map;
 	}
 
 	@Override
-	public void deleteContent(int num, HttpServletRequest request) {
+	public Map<String, String> deleteContent(int num) {
 		noticeDao.delete(num);
 		
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("isSuccess","success");
+				
+		return map;
+		
 	}
 
 	@Override
-	public void getData(HttpServletRequest request) {
-		int num=Integer.parseInt(request.getParameter("num"));
+	public Map<String, Object> getData(int num) {
 		NoticeDto dto = noticeDao.getData(num);
-		request.setAttribute("dto", dto);
 		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("isSuccess","success");
+		map.put("dto", dto);
+		
+		return map;
 	}
 
 }

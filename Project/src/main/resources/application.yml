@@ -29,3 +29,6 @@ mybatis:
 file:
   location: C:\data
   
+jwt:
+  password: testPassword
+  
