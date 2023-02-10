@@ -1,15 +1,18 @@
 package com.acorn.project.faq.service;
 
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 
 import com.acorn.project.faq.dto.FaqDto;
+import com.acorn.project.faq.dto.FaqReq;
+import com.acorn.project.faq.dto.FaqRes;
 
 public interface FaqService {
-	public void getList(HttpServletRequest request);
-	public void getDetail(HttpServletRequest request);
-	public void saveContent(FaqDto dto);
-	public void updateContent(FaqDto dto);
-	public void deleteContent(int num, HttpServletRequest request);
-	public void getData(HttpServletRequest request);
+	public Map<String, String> saveContent(FaqRes dto);
+	public Map<String, String> updateContent(FaqReq dto);
+	public Map<String, String> deleteContent(int num);
+	public Map<String, Object> getData(int num);
+	public Map<String, Object> list(int pageNum, String question, String content);
 	
 }
